@@ -2,8 +2,8 @@ require('dotenv').config()
 
 const puppeteer = require('puppeteer');
 const nodemailer = require('nodemailer');
-const accountSid = process.env.ACCOUNTSID; 
-const authToken = process.env.AUTHTOKEN; 
+const accountSid = "ACc992028f2ca9d6103c5cb63de4fd84c5"; 
+const authToken = "cb37c5d4a40d2a13a1964834e160a4d5"; 
 const client = require('twilio')(accountSid, authToken);
 const schedule = require("node-schedule");
 
@@ -17,8 +17,8 @@ schedule.scheduleJob("*/5 * * * *", () => {
   
   
     //LOGIN
-    await page.type('#user_email', process.env.USER_MAIL);
-    await page.type('#user_password', process.env.USER_PASSWORD);
+    await page.type('#user_email', "roland.vrignon@gmail.com");
+    await page.type('#user_password', "SqH$aNa$36crJnDS");
     await page.keyboard.down('Tab')
     await page.keyboard.press('Enter');
     await page.waitForNavigation()
@@ -40,17 +40,17 @@ schedule.scheduleJob("*/5 * * * *", () => {
       //Send me an email
   
       const transporter = nodemailer.createTransport({
-        host: process.env.MAIL_HOST,
-        port: process.env.MAIL_PORT,
+        host: "pro2.mail.ovh.net",
+        port: "587",
         auth: {
-          user: process.env.MAIL,
-          pass: process.env.MAIL_PASS,
+          user: "roland@blindating.io",
+          pass: "nCtYG?$e@35X6dBt",
         },
       });
   
       const options = {
-        from: process.env.MAIL,
-        to: process.env.USER_MAIL,
+        from: "roland@blindating.io",
+        to: "roland.vrignon@gmail.com",
         subject: "Inscription à 42 disponible morray 🤟⚡️",
         text: "Inscripts toi dès maintenant",
       };
@@ -68,8 +68,8 @@ schedule.scheduleJob("*/5 * * * *", () => {
       client.messages
         .create({
           body: 'Check-in disponible sur le portail 42 !',
-          messagingServiceSid: process.env.MESSAGINGSID,
-          to: process.env.PHONENUMBER
+          messagingServiceSid: "MG8e8dec5740ceabef7428014e08fc3548",
+          to: "+33769701268"
         })
         .then(message => console.log(message.sid))
         .done();
