@@ -8,7 +8,7 @@ const client = require('twilio')(accountSid, authToken);
 
 
 (async () => {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto('https://admissions.42.fr/users/sign_in');
 
@@ -47,7 +47,7 @@ const client = require('twilio')(accountSid, authToken);
 
     const options = {
       from: process.env.MAIL,
-      to: "roland.vrignon@gmail.com",
+      to: process.env.USER_MAIL,
       subject: "Inscription à 42 disponible morray 🤟⚡️",
       text: "Inscripts toi dès maintenant",
     };
@@ -73,10 +73,5 @@ const client = require('twilio')(accountSid, authToken);
 
     //Close browser
     browser.close()
-
-
   }
-
-
-
 })();
