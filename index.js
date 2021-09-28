@@ -2,6 +2,10 @@ require('dotenv').config()
 
 const puppeteer = require('puppeteer');
 const nodemailer = require('nodemailer');
+const accountSid = process.env.ACCOUNTSID; 
+const authToken = process.env.AUTHTOKEN; 
+const client = require('twilio')(accountSid, authToken); 
+
 
 (async () => {
   const browser = await puppeteer.launch({ headless: false });
@@ -30,6 +34,8 @@ const nodemailer = require('nodemailer');
   } else {
     console.log("dispooooo");
 
+    //Send me an email
+
     const transporter = nodemailer.createTransport({
       host: process.env.MAIL_HOST,
       port: process.env.MAIL_PORT,
@@ -54,12 +60,22 @@ const nodemailer = require('nodemailer');
       console.log("Email sent !!");
     });
 
+    //Send me an SMS
+
+    client.messages
+      .create({
+        body: 'Check-in disponible sur le portail 42 !',
+        messagingServiceSid: process.env.MESSAGINGSID,
+        to: process.env.PHONENUMBER
+      })
+      .then(message => console.log(message.sid))
+      .done();
+
+    //Close browser
+    browser.close()
+
 
   }
-
-  setTimeout(function () {
-    browser.close();
-  }, 4000)
 
 
 
