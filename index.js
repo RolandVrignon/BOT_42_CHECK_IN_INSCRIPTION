@@ -11,7 +11,7 @@ const schedule = require("node-schedule");
 // ------------ Every 20minutes
 schedule.scheduleJob("*/5 * * * *", () => {
   (async () => {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: true, args : ["--no-sandbox"] });
     const page = await browser.newPage();
     await page.goto('https://admissions.42.fr/users/sign_in');
   
@@ -26,7 +26,7 @@ schedule.scheduleJob("*/5 * * * *", () => {
     //Check IF CHECKIN AVAILABLE
   
     const stringIsIncluded = await page.evaluate(() => {
-      const string = "Il n'y a pas dse check-in disponible pour le moment, nous t'informerons dès qu'il y en aura un de disponible.";
+      const string = "Il n'y a pas de check-in disponible pour le moment, nous t'informerons dès qu'il y en aura un de disponible.";
       const selector = 'h5';
       return document.querySelector(selector).innerText.includes(string);
     });
