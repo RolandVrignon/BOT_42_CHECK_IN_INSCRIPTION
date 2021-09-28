@@ -26,7 +26,7 @@ schedule.scheduleJob("*/5 * * * *", () => {
     //Check IF CHECKIN AVAILABLE
   
     const stringIsIncluded = await page.evaluate(() => {
-      const string = "Il n'y a pas de check-in disponible pour le moment, nous t'informerons dès qu'il y en aura un de disponible.";
+      const string = "Il n'y a pas dse check-in disponible pour le moment, nous t'informerons dès qu'il y en aura un de disponible.";
       const selector = 'h5';
       return document.querySelector(selector).innerText.includes(string);
     });
