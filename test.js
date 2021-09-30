@@ -8,7 +8,7 @@ const client = require("twilio")(accountSid, authToken);
 const schedule = require("node-schedule");
 
 // ------------ Every 20minutes
-schedule.scheduleJob("*/2 * * * *", () => {
+schedule.scheduleJob("*/1 * * * *", () => {
   (async () => {
     const browser = await puppeteer.launch({
       headless: true,
@@ -26,17 +26,23 @@ schedule.scheduleJob("*/2 * * * *", () => {
 
     //Check IF CHECKIN AVAILABLE
 
-    const stringIsIncluded = await page.evaluate(() => {
-      const string =
-        "Il n'y a pas de check-in disponible pour le moment, nous t'informerons dès qu'il y en aura un de disponible.";
-      const selector = "h5";
-      return document.querySelector(selector).innerText.includes(string);
+    var elementExists = await page.evaluate(() => {
+      let el = document.querySelector("h5");
+      if (
+        el &&
+        el.innerText ===
+          "Il n'y a pas de check-in disponible pour le moment, nous t'informerons dès qu'il y en aura un de disponible."
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     });
 
     const timeElapsed = Date.now();
     const today = new Date(timeElapsed);
 
-    if (stringIsIncluded) {
+    if (elementExists) {
       console.log(today.toUTCString(), " : pas de dispos");
       browser.close();
     } else {
