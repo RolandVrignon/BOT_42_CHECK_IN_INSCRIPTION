@@ -7,7 +7,7 @@ const authToken = process.env.AUTHTOKEN;
 const client = require("twilio")(accountSid, authToken);
 const schedule = require("node-schedule");
 
-// ------------ Every 20minutes
+// ------------ Every minutes
 schedule.scheduleJob("*/1 * * * *", () => {
   (async () => {
     const browser = await puppeteer.launch({
